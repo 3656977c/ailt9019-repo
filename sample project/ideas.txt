@@ -1,0 +1,21 @@
+IDEA [1]
+
+Medium · Clinic information navigator 
+-Students finding opening hours or booking basics from the official clinic/service web pages. 
+-Does not: give medical diagnosis, triage urgency, or book appointments on the user’s behalf. 
+
+User Group: Students
+Task: A small, UI-implemented assistant to help guide students navigate the website and make smart decisions that can save time
+Dataset: Polls, Q&A, Website itself (self-curated)
+
+
+
+IDEA [2]
+
+Challenging · Lesson-plan scaffolder 
+-Tutors who need a first-draft lesson outline from a short topic brief (no live student data). 
+-Does not: assess real students, store class rosters, or claim the draft is an accredited curriculum. 
+
+Use Group: Teachers and Professors
+Task: Takes in notes and general idea, then creates a first draft organizing everything structurally for easier comprehension
+Dataset: Public Notes (licensed)

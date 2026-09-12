@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKD ⇄ PHP</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f2f2f7;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            width: 100%;
+            max-width: 360px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #1c1c1e;
+            margin-bottom: 24px;
+        }
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: #f2f2f7;
+            border-radius: 14px;
+        }
+        .flag { font-size: 1.6rem; }
+        .code {
+            font-weight: 600;
+            color: #1c1c1e;
+            font-size: 1rem;
+        }
+        input {
+            margin-left: auto;
+            width: 100px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: right;
+            background: white;
+            color: #1c1c1e;
+            outline: none;
+        }
+        input[readonly] { background: #e5e5ea; }
+        .swap {
+            display: flex;
+            justify-content: center;
+            margin: 12px 0;
+        }
+        .swap button {
+            background: #007aff;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .swap button:hover { transform: rotate(180deg); }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #007aff;
+        }
+        .rate {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: #8e8e93;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>HKD ⇄ PHP</h1>
+
+        <div class="row" id="topRow">
+            <span class="flag">🇭🇰</span>
+            <span class="code">HKD</span>
+            <input type="number" id="topInput" value="100" min="0" step="0.01">
+        </div>
+
+        <div class="swap">
+            <button onclick="swap()">⇅</button>
+        </div>
+
+        <div class="row" id="botRow">
+            <span class="flag">🇵🇭</span>
+            <span class="code">PHP</span>
+            <input type="number" id="botInput" readonly>
+        </div>
+
+        <div class="result" id="result">₱750.00</div>
+        <div class="rate">1 HKD ≈ 7.50 PHP</div>
+    </div>
+
+    <script>
+        const RATE = 7.50;
+        let swapped = false;
+
+        const topRow = document.getElementById('topRow');
+        const botRow = document.getElementById('botRow');
+        const topInput = document.getElementById('topInput');
+        const botInput = document.getElementById('botInput');
+        const result = document.getElementById('result');
+
+        function fmt(n, curr) {
+            return new Intl.NumberFormat('en', {
+                style: 'currency', currency: curr
+            }).format(n);
+        }
+
+        function calc() {
+            const n = parseFloat(topInput.value) || 0;
+            const out = swapped ? n / RATE : n * RATE;
+            botInput.value = out.toFixed(2);
+            result.textContent = fmt(out, swapped ? 'HKD' : 'PHP');
+        }
+
+        function swap() {
+            swapped = !swapped;
+            const t = topRow.querySelector('.flag').textContent;
+            topRow.querySelector('.flag').textContent = botRow.querySelector('.flag').textContent;
+            botRow.querySelector('.flag').textContent = t;
+
+            const c = topRow.querySelector('.code').textContent;
+            topRow.querySelector('.code').textContent = botRow.querySelector('.code').textContent;
+            botRow.querySelector('.code').textContent = c;
+
+            calc();
+        }
+
+        topInput.addEventListener('input', calc);
+        calc();
+    </script>
+</body>
+</html>
